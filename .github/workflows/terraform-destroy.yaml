@@ -1,0 +1,28 @@
+name: Terraform Destroy
+run-name: Terraform Destroy - ${{ github.ref_name }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to destroy"
+        required: true
+        type: choice
+        options:
+          - devl
+          - test
+          - prod
+        default: devl
+
+
+jobs:
+  destroy:
+    name: 💥 Run Terraform Destroy
+    uses: subhamay-bhattacharyya-gha/terraform-destroy-wf/.github/workflows/terraform-destroy.yaml@v1.0.0
+    with:
+      cloud-provider: gcp
+      backend-type: remote
+    secrets:
+      tfc-token: ${{ secrets.TF_TOKEN_APP_TERRAFORM_IO }}
+      gcp-wif-provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      gcp-service-account: ${{ vars.GCP_SERVICE_ACCOUNT }}

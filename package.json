@@ -1,0 +1,24 @@
+{
+  "name": "terraform-google-service-demo",
+  "version": "1.0.0",
+  "description": "Terraform module for provisioning a Google Cloud Storage resource on GCP.",
+  "scripts": {
+    "lint": "pre-commit run --all-files",
+    "tf:fmt": "cd tf && terraform fmt -recursive",
+    "tf:validate": "cd tf && terraform init -backend=false && terraform validate",
+    "tf:plan:devl": "cd tf && terraform plan -var-file=environments/devl/auto.terraform.tfvars.json",
+    "tf:plan:test": "cd tf && terraform plan -var-file=environments/test/auto.terraform.tfvars.json",
+    "tf:plan:prod": "cd tf && terraform plan -var-file=environments/prod/auto.terraform.tfvars.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/subhamay-bhattacharyya-gha/terraform-google-service-demo"
+  },
+  "keywords": [
+    "terraform",
+    "gcp",
+    "google-cloud-storage",
+    "iac"
+  ],
+  "license": "MIT"
+}

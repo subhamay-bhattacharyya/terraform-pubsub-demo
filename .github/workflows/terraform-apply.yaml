@@ -1,0 +1,42 @@
+name: Terraform Apply
+run-name: Terraform Apply - ${{ github.ref_name }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy to"
+        required: true
+        type: choice
+        options:
+          - devl
+          - test
+          - prod
+        default: devl
+
+
+jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+    outputs:
+      tf-vars-file: ${{ steps.vars.outputs.tf-vars-file }}
+    steps:
+      - name: Derive tf-vars-file
+        id: vars
+        run: |
+          echo "tf-vars-file=environments/${{ inputs.environment }}/auto.terraform.tfvars.json" >> "$GITHUB_OUTPUT"
+
+  apply:
+    name: 🚧 Run Terraform Apply
+    needs: prepare
+    uses: subhamay-bhattacharyya-gha/tf-deploy-multi-reusable-wf/.github/workflows/terraform-deploy.yaml@v1.1.1
+    with:
+      cloud-provider: gcp
+      tflint-ver: ${{ vars.TF_LINT_VER }}
+      backend-type: remote
+      tf-vars-file: ${{ needs.prepare.outputs.tf-vars-file }}
+    secrets:
+      tfc-token: ${{ secrets.TF_TOKEN_APP_TERRAFORM_IO }}
+      gcp-wif-provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      gcp-service-account: ${{ vars.GCP_SERVICE_ACCOUNT }}

@@ -1,0 +1,12 @@
+{
+  "name": "bucket",
+  "location": "US",
+  "storage_class": "STANDARD",
+  "force_destroy": false,
+  "uniform_bucket_level_access": true,
+  "public_access_prevention": "enforced",
+  "versioning_enabled": true,
+  "labels": {
+    "managed_by": "terraform"
+  }
+}
