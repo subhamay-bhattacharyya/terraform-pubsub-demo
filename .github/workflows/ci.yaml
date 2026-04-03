@@ -55,7 +55,7 @@ jobs:
         run: |
           echo "Placeholder for TF Test reusable action"
       # - name: Checkout
-      #   uses: actions/checkout@v4
+      #   uses: actions/checkout@v6
 
       # - name: Setup Terraform
       #   uses: hashicorp/setup-terraform@v3
@@ -79,7 +79,7 @@ jobs:
     if: github.ref != 'refs/heads/main'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
